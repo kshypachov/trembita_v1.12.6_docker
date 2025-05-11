@@ -4,14 +4,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 LABEL authors="Kirill Shypachov @kshypachov"
 ARG REPO_KEY=https://project-repo.trembita.gov.ua:8081/public-keys/public.key.txt
 
-
-RUN apt-get -qq update
-RUN apt-get -qq install gnupg2 \
+RUN apt-get -qq update \
+    && apt-get -qq install gnupg2 \
     && apt-get -qq --no-install-recommends install \
       locales ca-certificates perl bzip2 libc6-dev lsb-release \
       ca-certificates gnupg supervisor net-tools iproute2 locales \
       rlwrap ca-certificates-java \
       crudini adduser expect curl rsyslog dpkg-dev \
+    && adduser --quiet --system --uid 998 --home /var/lib/postgresql --no-create-home --shell /bin/bash --group postgres \
+    && adduser --quiet --system --uid 999 --home /var/lib/uxp --no-create-home --shell /bin/bash --group uxp \
+    && useradd -m uxpadmin -s /usr/sbin/nologin -p '$6$7rx.CcTn$lkhsqW3zu6BrKbnQbOMaIFsZWv.DgH5LxtsXuxDftj8yF2e/KgxTOUQFozkYfcf1H.HSyxEtECMF8P7vy4M1b/' \
+    && echo "uxp-proxy uxp-common/username string uxpadmin" | debconf-set-selections \
     && echo "LC_ALL=en_US.UTF-8" >>/etc/environment \
     && locale-gen en_US.UTF-8 \
     && apt-get clean  \
@@ -23,34 +26,32 @@ RUN echo "deb https://project-repo.trembita.gov.ua:8081/repository/trembita-memb
 
 ADD ["$REPO_KEY","/tmp/repokey.gpg"]
 RUN apt-key add '/tmp/repokey.gpg'
-RUN echo "LC_ALL=en_US.UTF-8" >>/etc/environment
-RUN locale-gen en_US.UTF-8
-
-RUN echo "uxp-proxy uxp-common/username string uxpadmin" | debconf-set-selections
-RUN useradd -m uxpadmin -s /usr/sbin/nologin -p '$6$7rx.CcTn$lkhsqW3zu6BrKbnQbOMaIFsZWv.DgH5LxtsXuxDftj8yF2e/KgxTOUQFozkYfcf1H.HSyxEtECMF8P7vy4M1b/'
 
 RUN apt-get -qq update \
-    && apt-get -y --no-install-recommends install ssl-cert \
-    && apt-get -y --no-install-recommends install postgresql-10 postgresql-contrib --no-install-recommends \
-    && apt-get -y --no-install-recommends install nginx \
+    && apt-get -qq -y --no-install-recommends install ssl-cert postgresql-10 postgresql-contrib nginx \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
-RUN echo -e '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
-RUN echo -e '#!/bin/sh\nexit 0' > /usr/sbin/service && chmod +x /usr/sbin/service
+RUN printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d \
+    && printf '#!/bin/sh\nexit 0\n' > /usr/sbin/service && chmod +x /usr/sbin/service
 
-RUN pg_ctlcluster 10 main start & \
-    nginx & \
-    sleep 5 && \
-    apt-get -qq update \
-    && apt-get -y --no-install-recommends install uxp-securityserver-ua  \
+RUN pg_ctlcluster 10 main start \
+    && apt-get -qq update \
+    && apt-get -qq -y --no-install-recommends install uxp-securityserver-ua  \
+    && pg_ctlcluster 10 main stop  \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/* \
     && wait
 
 COPY ss_trembita.conf /etc/supervisor/supervisord.conf
+COPY entrypoint.sh /root/entrypoint.sh
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+RUN chown -R uxp:uxp /etc/uxp /var/lib/uxp /var/log/uxp /usr/share/uxp/jlib
+RUN chown -R postgres:postgres /var/lib/postgresql/
+RUN chmod 600 /etc/supervisor/supervisord.conf
+RUN chmod +x /root/entrypoint.sh
+
+CMD ["/root/entrypoint.sh"]
 
 VOLUME ["/etc/uxp", "/var/lib/uxp", "/var/lib/postgresql/10/main/", "/var/log/uxp/"]
 EXPOSE 4000 5500 5577 5599 443 80
