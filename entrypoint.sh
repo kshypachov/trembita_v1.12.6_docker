@@ -16,17 +16,5 @@ then
    unset UXPADMIN_PASS
 fi
 
-#exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
-
 log "Starting supervisord"
-supervisord -c /etc/supervisor/supervisord.conf &
-
-SUP_PID=$!
-
-log "Locking down root access"
-
-# Удаляем shell у root и блокируем root-пароль
-usermod -s /usr/sbin/nologin root || true
-passwd -l root || true
-
-wait "$SUP_PID"
+exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf

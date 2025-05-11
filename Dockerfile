@@ -46,10 +46,10 @@ RUN pg_ctlcluster 10 main start \
 COPY ss_trembita.conf /etc/supervisor/supervisord.conf
 COPY entrypoint.sh /root/entrypoint.sh
 
-RUN chown -R uxp:uxp /etc/uxp /var/lib/uxp /var/log/uxp /usr/share/uxp/jlib
-RUN chown -R postgres:postgres /var/lib/postgresql/
-RUN chmod 600 /etc/supervisor/supervisord.conf
-RUN chmod +x /root/entrypoint.sh
+RUN chown -R uxp:uxp /etc/uxp /var/lib/uxp /var/log/uxp /usr/share/uxp/jlib \
+    && chown -R postgres:postgres /var/lib/postgresql/ \
+    && chmod 600 /etc/supervisor/supervisord.conf \
+    && chmod +x /root/entrypoint.sh
 
 CMD ["/root/entrypoint.sh"]
 
