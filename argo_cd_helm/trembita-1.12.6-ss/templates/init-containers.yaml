@@ -6,7 +6,7 @@ initContainers:
     image: {{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}
     command: ["/bin/sh", "-c"]
     args:
-      - cp -r {{ $cfg.mountPath }}/* /mnt/target/ || true
+      - cp -a {{ $cfg.mountPath }}/* /mnt/target/ || true
     volumeMounts:
       - name: {{ $name }}
         mountPath: /mnt/target
