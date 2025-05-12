@@ -152,3 +152,36 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistentVolumes:
+  etc-uxp:
+    enabled: true
+    size: 100Mi
+    mountPath: /etc/uxp
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+
+  lib-uxp:
+    enabled: true
+    size: 200Mi
+    mountPath: /var/lib/uxp
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+
+  postgres-data:
+    enabled: true
+    size: 1Gi
+    mountPath: /var/lib/postgresql/10/main/
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+
+  log:
+    enabled: true
+    size: 200Mi
+    mountPath: /var/log
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
