@@ -10,7 +10,7 @@ initContainers:
         set -x
         echo "[INFO] Starting init container for {{ $name }}"
         if [ -d "{{ $cfg.mountPath }}" ]; then
-          cp -a {{ $cfg.mountPath }}/ /mnt/target/ || true
+          cp -a {{ $cfg.mountPath }}/* /mnt/target/ || true
           echo "[INFO] Done copying {{ $cfg.mountPath }} to /mnt/target/"
         else
           echo "[WARN] Source directory {{ $cfg.mountPath }} not found"
