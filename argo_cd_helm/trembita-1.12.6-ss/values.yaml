@@ -135,14 +135,34 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
+  - name: etc-uxp
+    persistentVolumeClaim:
+      claimName: trembita-etc-uxp
+  - name: lib-uxp
+    persistentVolumeClaim:
+      claimName: trembita-lib-uxp
+  - name: postgres-data
+    persistentVolumeClaim:
+      claimName: trembita-postgres-data
+  - name: log
+    persistentVolumeClaim:
+      claimName: trembita-log
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - name: etc-uxp
+    mountPath: /etc/uxp
+  - name: lib-uxp
+    mountPath: /var/lib/uxp
+  - name: postgres-data
+    mountPath: /var/lib/postgresql/10/main/
+  - name: log
+    mountPath: /var/log/
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
