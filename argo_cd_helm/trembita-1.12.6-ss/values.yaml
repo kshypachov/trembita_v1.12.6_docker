@@ -146,34 +146,34 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: etc-uxp
-    persistentVolumeClaim:
-      claimName: trembita-1-12-6-trembita-1-12-6-ss-etc-uxp
-  - name: lib-uxp
-    persistentVolumeClaim:
-      claimName: trembita-1-12-6-trembita-1-12-6-ss-lib-uxp
-  - name: postgres-data
-    persistentVolumeClaim:
-      claimName: trembita-1-12-6-trembita-1-12-6-ss-postgres-data
-  - name: log
-    persistentVolumeClaim:
-      claimName: trembita-1-12-6-trembita-1-12-6-ss-log
+volumes: []
+#  - name: etc-uxp
+#    persistentVolumeClaim:
+#      claimName: trembita-1-12-6-trembita-1-12-6-ss-etc-uxp
+#  - name: lib-uxp
+#    persistentVolumeClaim:
+#      claimName: trembita-1-12-6-trembita-1-12-6-ss-lib-uxp
+#  - name: postgres-data
+#    persistentVolumeClaim:
+#      claimName: trembita-1-12-6-trembita-1-12-6-ss-postgres-data
+#  - name: log
+#    persistentVolumeClaim:
+#      claimName: trembita-1-12-6-trembita-1-12-6-ss-log
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-  - name: etc-uxp
-    mountPath: /etc/uxp
-  - name: lib-uxp
-    mountPath: /var/lib/uxp
-  - name: postgres-data
-    mountPath: /var/lib/postgresql/10/main/
-  - name: log
-    mountPath: /var/log/
+volumeMounts: []
+#  - name: etc-uxp
+#    mountPath: /etc/uxp
+#  - name: lib-uxp
+#    mountPath: /var/lib/uxp
+#  - name: postgres-data
+#    mountPath: /var/lib/postgresql/10/main/
+#  - name: log
+#    mountPath: /var/log/
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -184,39 +184,39 @@ tolerations: []
 
 affinity: {}
 
-persistentVolumes:
-  etc-uxp:
-    enabled: false
-    initCopy: false
-    size: 100Mi
-    mountPath: /etc/uxp
-    storageClassName: ""
-    accessModes:
-      - ReadWriteOnce
-
-  lib-uxp:
-    enabled: false
-    initCopy: false
-    size: 200Mi
-    mountPath: /var/lib/uxp
-    storageClassName: ""
-    accessModes:
-      - ReadWriteOnce
-
-  postgres-data:
-    enabled: false
-    initCopy: false
-    size: 1Gi
-    mountPath: /var/lib/postgresql/10/main/
-    storageClassName: ""
-    accessModes:
-      - ReadWriteOnce
-
-  log:
-    enabled: false
-    initCopy: false
-    size: 200Mi
-    mountPath: /var/log
-    storageClassName: ""
-    accessModes:
-      - ReadWriteOnce
+persistentVolumes: []
+#  etc-uxp:
+#    enabled: false
+#    initCopy: false
+#    size: 100Mi
+#    mountPath: /etc/uxp
+#    storageClassName: ""
+#    accessModes:
+#      - ReadWriteOnce
+#
+#  lib-uxp:
+#    enabled: false
+#    initCopy: false
+#    size: 200Mi
+#    mountPath: /var/lib/uxp
+#    storageClassName: ""
+#    accessModes:
+#      - ReadWriteOnce
+#
+#  postgres-data:
+#    enabled: false
+#    initCopy: false
+#    size: 1Gi
+#    mountPath: /var/lib/postgresql/10/main/
+#    storageClassName: ""
+#    accessModes:
+#      - ReadWriteOnce
+#
+#  log:
+#    enabled: false
+#    initCopy: false
+#    size: 200Mi
+#    mountPath: /var/log
+#    storageClassName: ""
+#    accessModes:
+#      - ReadWriteOnce
