@@ -88,10 +88,10 @@ ingress:
         - path: /
           pathType: Prefix
           port: 4000
-#  tls:
-#    - hosts:
-#        - trembita.local
-#      secretName: trembita-tls
+  tls:
+    - hosts:
+        - trembita.local
+      secretName: trembita-tls
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
