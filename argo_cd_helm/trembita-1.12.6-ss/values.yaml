@@ -195,6 +195,8 @@ persistentVolumes:
     size: 1Gi
     mountPath: /var/lib/postgresql/10/main/
     storageClassName: ""
+    uid: 998
+    gid: 998
     accessModes:
       - ReadWriteOnce
 
