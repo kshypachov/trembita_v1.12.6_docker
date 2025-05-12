@@ -186,7 +186,7 @@ affinity: {}
 
 persistentVolumes:
   etc-uxp:
-    enabled: true
+    enabled: false
     size: 100Mi
     mountPath: /etc/uxp
     storageClassName: ""
@@ -194,7 +194,7 @@ persistentVolumes:
       - ReadWriteOnce
 
   lib-uxp:
-    enabled: true
+    enabled: false
     size: 200Mi
     mountPath: /var/lib/uxp
     storageClassName: ""
@@ -202,17 +202,15 @@ persistentVolumes:
       - ReadWriteOnce
 
   postgres-data:
-    enabled: true
+    enabled: false
     size: 1Gi
     mountPath: /var/lib/postgresql/10/main/
     storageClassName: ""
-    uid: 998
-    gid: 998
     accessModes:
       - ReadWriteOnce
 
   log:
-    enabled: true
+    enabled: false
     size: 200Mi
     mountPath: /var/log
     storageClassName: ""
