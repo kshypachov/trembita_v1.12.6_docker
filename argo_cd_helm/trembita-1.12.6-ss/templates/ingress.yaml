@@ -35,7 +35,7 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "trembita-1.12.6-ss.fullname" $ }}
+                name: {{ include "trembita-1.12.6-ss.fullname" $ }}-internal
                 port:
                   number: {{ .port }}
           {{- end }}
