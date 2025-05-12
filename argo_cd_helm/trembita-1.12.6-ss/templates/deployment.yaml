@@ -58,13 +58,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- range $name, $cfg := .Values.persistentVolumes }}
-            {{- if $cfg.enabled }}
-            - name: {{ $name }}
-              mountPath: {{ $cfg.mountPath }}
-            {{- end }}
-            {{- end }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

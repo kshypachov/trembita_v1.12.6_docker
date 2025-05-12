@@ -138,16 +138,16 @@ autoscaling:
 volumes:
   - name: etc-uxp
     persistentVolumeClaim:
-      claimName: trembita-etc-uxp
+      claimName: trembita-1-12-6-trembita-1-12-6-etc-uxp
   - name: lib-uxp
     persistentVolumeClaim:
-      claimName: trembita-lib-uxp
+      claimName: trembita-1-12-6-trembita-1-12-6-lib-uxp
   - name: postgres-data
     persistentVolumeClaim:
-      claimName: trembita-postgres-data
+      claimName: trembita-1-12-6-trembita-1-12-6-postgres-data
   - name: log
     persistentVolumeClaim:
-      claimName: trembita-log
+      claimName: trembita-1-12-6-trembita-1-12-6-log
 # - name: foo
 #   secret:
 #     secretName: mysecret
