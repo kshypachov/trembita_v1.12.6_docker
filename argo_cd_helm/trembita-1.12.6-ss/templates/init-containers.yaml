@@ -12,3 +12,4 @@ initContainers:
         mountPath: /mnt/target
   {{- end }}
   {{- end }}
+{{- end }}
