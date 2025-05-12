@@ -55,5 +55,5 @@ RUN chown -R uxp:uxp /etc/uxp /var/lib/uxp /var/log/uxp /usr/share/uxp/jlib \
 
 CMD ["/root/entrypoint.sh"]
 
-VOLUME ["/etc/uxp", "/var/lib/uxp", "/var/lib/postgresql/10/main/", "/var/log/uxp/"]
+VOLUME ["/etc/uxp", "/var/lib/uxp", "/var/lib/postgresql/10/main/", "/var/log/"]
 EXPOSE 4000 5500 5577 5599 443 80
