@@ -103,11 +103,13 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 4000
+    scheme: HTTPS
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 4000
+    scheme: HTTPS
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
