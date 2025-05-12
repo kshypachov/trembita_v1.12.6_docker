@@ -101,7 +101,7 @@ ingress:
           pathType: Prefix
           port: 4000
         - path: /secure_api(/|$)(.*)
-          pathType: Prefix
+          pathType: ImplementationSpecific
           port: 80
   tls:
     - hosts:
