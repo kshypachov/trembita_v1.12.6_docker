@@ -70,9 +70,15 @@ services:
     enabled: true
     type: ClusterIP
     ports:
-      - name: http
+      - name: http-web-mgmt
         port: 4000
         targetPort: 4000
+      - name: http-service
+        port: 80
+        targetPort: 80
+      - name: https-service
+        port: 443
+        targetPort: 443
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -92,6 +98,9 @@ ingress:
         - path: /
           pathType: Prefix
           port: 4000
+        - path: /
+          pathType: Prefix
+          port: 80
   tls:
     - hosts:
         - trembita.local
