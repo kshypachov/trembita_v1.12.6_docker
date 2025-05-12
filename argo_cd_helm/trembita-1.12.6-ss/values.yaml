@@ -91,6 +91,8 @@ ingress:
     nginx.ingress.kubernetes.io/x-forwarded-prefix: "/"
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
     nginx.ingress.kubernetes.io/preserve-host: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: trembita.local
@@ -98,7 +100,7 @@ ingress:
         - path: /
           pathType: Prefix
           port: 4000
-        - path: /
+        - path: /secure_api(/|$)(.*)
           pathType: Prefix
           port: 80
   tls:
