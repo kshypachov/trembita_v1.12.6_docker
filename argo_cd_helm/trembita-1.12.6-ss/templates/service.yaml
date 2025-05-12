@@ -12,6 +12,6 @@ spec:
       port: {{ .port }}
       targetPort: {{ .targetPort }}
       protocol: TCP
-    {{ - end }}
+    {{- end }}
   selector:
     {{- include "trembita-1.12.6-ss.selectorLabels" . | nindent 4 }}
