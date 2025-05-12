@@ -1,23 +1,23 @@
-{{- define "trembita-1.12.6-ss.initContainers" }}
-initContainers:
-  {{- range $name, $cfg := .Values.persistentVolumes }}
-  {{- if $cfg.enabled }}
-  - name: init-copy-{{ $name }}
-    image: {{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}
-    command: ["/bin/sh", "-c"]
-    args:
-      - |
-        set -x
-        echo "[INFO] Starting init container for {{ $name }}"
-        if [ -d "{{ $cfg.mountPath }}" ]; then
-          cp -a {{ $cfg.mountPath }}/* /mnt/target/ || true
-          echo "[INFO] Done copying {{ $cfg.mountPath }} to /mnt/target/"
-        else
-          echo "[WARN] Source directory {{ $cfg.mountPath }} not found"
-        fi
-    volumeMounts:
-      - name: {{ $name }}
-        mountPath: /mnt/target
-  {{- end }}
-  {{- end }}
-{{- end }}
+{{/*{{- define "trembita-1.12.6-ss.initContainers" }}*/}}
+{{/*initContainers:*/}}
+{{/*  {{- range $name, $cfg := .Values.persistentVolumes }}*/}}
+{{/*  {{- if $cfg.enabled }}*/}}
+{{/*  - name: init-copy-{{ $name }}*/}}
+{{/*    image: {{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}*/}}
+{{/*    command: ["/bin/sh", "-c"]*/}}
+{{/*    args:*/}}
+{{/*      - |*/}}
+{{/*        set -x*/}}
+{{/*        echo "[INFO] Starting init container for {{ $name }}"*/}}
+{{/*        if [ -d "{{ $cfg.mountPath }}" ]; then*/}}
+{{/*          cp -a {{ $cfg.mountPath }}/* /mnt/target/ || true*/}}
+{{/*          echo "[INFO] Done copying {{ $cfg.mountPath }} to /mnt/target/"*/}}
+{{/*        else*/}}
+{{/*          echo "[WARN] Source directory {{ $cfg.mountPath }} not found"*/}}
+{{/*        fi*/}}
+{{/*    volumeMounts:*/}}
+{{/*      - name: {{ $name }}*/}}
+{{/*        mountPath: /mnt/target*/}}
+{{/*  {{- end }}*/}}
+{{/*  {{- end }}*/}}
+{{/*{{- end }}*/}}
