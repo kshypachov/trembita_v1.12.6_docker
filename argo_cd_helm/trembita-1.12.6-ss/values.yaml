@@ -84,6 +84,7 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/x-forwarded-prefix: "/"
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/preserve-host: "true"
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: trembita.local
