@@ -1,0 +1,17 @@
+{{- if .Values.services.internal.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trembita-1.12.6-ss.fullname" . }}-internal
+spec:
+  type: {{ .Values.services.internal.type }}
+  selector:
+    {{- include "trembita-1.12.6-ss.selectorLabels" . | nindent 4 }}
+  ports:
+    {{- range .Values.services.internal.ports }}
+    - name: {{ .name }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+      protocol: TCP
+    {{- end }}
+{{- end }}

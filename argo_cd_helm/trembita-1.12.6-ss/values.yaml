@@ -52,17 +52,27 @@ securityContext: {}
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: LoadBalancer
-  ports:
-    - name: port5500
-      port: 5500
-      targetPort: 5500
-    - name: port5577
-      port: 5577
-      targetPort: 5577
-    - name: port5599
-      port: 5599
-      targetPort: 5599
+  external:
+    enabled: true
+    type: LoadBalancer
+    ports:
+      - name: port5500
+        port: 5500
+        targetPort: 5500
+      - name: port5577
+        port: 5577
+        targetPort: 5577
+      - name: port5599
+        port: 5599
+        targetPort: 5599
+
+  internal:
+    enabled: true
+    type: ClusterIP
+    ports:
+      - name: http
+        port: 4000
+        targetPort: 4000
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
