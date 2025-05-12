@@ -45,11 +45,13 @@ RUN pg_ctlcluster 10 main start \
 
 COPY ss_trembita.conf /etc/supervisor/supervisord.conf
 COPY entrypoint.sh /root/entrypoint.sh
+COPY nginx_default-uxp.conf /etc/nginx/sites-enabled/default-uxp
 
 RUN chown -R uxp:uxp /etc/uxp /var/lib/uxp /var/log/uxp /usr/share/uxp/jlib \
     && chown -R postgres:postgres /var/lib/postgresql/ \
     && chmod 600 /etc/supervisor/supervisord.conf \
-    && chmod +x /root/entrypoint.sh
+    && chmod +x /root/entrypoint.sh \
+    && chmod 600 /etc/nginx/sites-enabled/default-uxp
 
 CMD ["/root/entrypoint.sh"]
 
