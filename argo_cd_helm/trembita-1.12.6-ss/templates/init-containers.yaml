@@ -1,4 +1,4 @@
-initContainers: {}
+initContainers: []
 {{/*{{- define "trembita-1.12.6-ss.initContainers" }}*/}}
 {{/*initContainers:*/}}
 {{/*  {{- range $name, $cfg := .Values.persistentVolumes }}*/}}
