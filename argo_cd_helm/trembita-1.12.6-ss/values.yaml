@@ -135,7 +135,7 @@ livenessProbe:
     path: /
     port: 4000
     scheme: HTTP
-  initialDelaySeconds: 15
+  initialDelaySeconds: 120
   periodSeconds: 10
 
 readinessProbe:
@@ -143,7 +143,7 @@ readinessProbe:
     path: /
     port: 4000
     scheme: HTTP
-  initialDelaySeconds: 15
+  initialDelaySeconds: 120
   periodSeconds: 10
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
