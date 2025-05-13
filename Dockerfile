@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 LABEL authors="Kirill Shypachov @kshypachov"
 ARG REPO_KEY=https://project-repo.trembita.gov.ua:8081/public-keys/public.key.txt
 
+
 RUN apt-get -qq update \
     && apt-get -qq install gnupg2 \
     && apt-get -qq --no-install-recommends install \
@@ -11,8 +12,6 @@ RUN apt-get -qq update \
       ca-certificates gnupg supervisor net-tools iproute2 locales \
       rlwrap ca-certificates-java \
       crudini adduser expect curl rsyslog dpkg-dev \
-    && adduser --quiet --system --uid 998 --home /var/lib/postgresql --no-create-home --shell /bin/bash --group postgres \
-    && adduser --quiet --system --uid 999 --home /var/lib/uxp --no-create-home --shell /bin/bash --group uxp \
     && useradd -m uxpadmin -s /usr/sbin/nologin -p '$6$7rx.CcTn$lkhsqW3zu6BrKbnQbOMaIFsZWv.DgH5LxtsXuxDftj8yF2e/KgxTOUQFozkYfcf1H.HSyxEtECMF8P7vy4M1b/' \
     && echo "uxp-proxy uxp-common/username string uxpadmin" | debconf-set-selections \
     && echo "LC_ALL=en_US.UTF-8" >>/etc/environment \
@@ -28,7 +27,9 @@ ADD ["$REPO_KEY","/tmp/repokey.gpg"]
 RUN apt-key add '/tmp/repokey.gpg'
 
 RUN apt-get -qq update \
-    && apt-get -qq -y --no-install-recommends install ssl-cert postgresql-10 postgresql-contrib nginx \
+    && apt-get -y --no-install-recommends install ssl-cert \
+    && apt-get -y --no-install-recommends install postgresql-10 postgresql-contrib --no-install-recommends \
+    && apt-get -y --no-install-recommends install nginx \
     && apt-get clean  \
     && rm -rf /var/lib/apt/lists/*
 
@@ -47,13 +48,8 @@ COPY ss_trembita.conf /etc/supervisor/supervisord.conf
 COPY entrypoint.sh /root/entrypoint.sh
 COPY nginx_default-uxp.conf /etc/nginx/sites-enabled/default-uxp
 
-RUN chown -R uxp:uxp /etc/uxp /var/lib/uxp /var/log/uxp /usr/share/uxp/jlib \
-    && chown -R postgres:postgres /var/lib/postgresql/ \
-    && chmod 600 /etc/supervisor/supervisord.conf \
-    && chmod +x /root/entrypoint.sh \
-    && chmod 600 /etc/nginx/sites-enabled/default-uxp
+RUN chmod +x /root/entrypoint.sh
 
 CMD ["/root/entrypoint.sh"]
-
-VOLUME ["/etc/uxp", "/var/lib/uxp", "/var/lib/postgresql/10/main/", "/var/log/"]
+VOLUME ["/etc/uxp", "/var/lib/uxp", "/var/lib/postgresql/10/main/", "/var/log/uxp/"]
 EXPOSE 4000 5500 5577 5599 443 80
