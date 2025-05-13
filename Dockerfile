@@ -2,7 +2,9 @@ FROM ubuntu:18.04 AS base
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL authors="Kirill Shypachov @kshypachov"
+LABEL version=v1.0.13
 ARG REPO_KEY=https://project-repo.trembita.gov.ua:8081/public-keys/public.key.txt
+
 
 
 RUN apt-get -qq update \
