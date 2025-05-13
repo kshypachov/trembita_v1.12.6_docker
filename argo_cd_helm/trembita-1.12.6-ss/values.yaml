@@ -104,9 +104,12 @@ ingress:
         - path: /
           pathType: Prefix
           port: 4000
-#        - path: /secure_api(/|$)(.*)
-#          pathType: ImplementationSpecific
-#          port: 80
+
+    - host: api.trembita.local
+      paths:
+        - path: /
+          pathType: Prefix
+          port: 80
   tls:
     - hosts:
         - trembita.local
