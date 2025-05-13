@@ -13,11 +13,9 @@ initContainers:
         if [ -d "{{ $cfg.mountPath }}" ]; then
           cp -rp {{ $cfg.mountPath }}/* /mnt/target/ || true
           echo "[INFO] Done copying {{ $cfg.mountPath }} to /mnt/target/"
-
           uid_gid=$(stat -c '%u:%g' {{ $cfg.mountPath }})
           echo "[INFO] Changing ownership of /mnt/target/ to $uid_gid"
           chown "$uid_gid" /mnt/target/
-
         else
           echo "[WARN] Source directory {{ $cfg.mountPath }} not found"
         fi
