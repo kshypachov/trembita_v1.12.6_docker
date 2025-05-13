@@ -7,7 +7,7 @@ initContainers:
       - |
         set -x
         echo "Start copy"
-        cp -rp /etc/uxp/ /mnt/etc-uxp/
+        cp -rp /etc/uxp/* /mnt/etc-uxp/
         echo "End copy"
     volumeMounts:
       - name: etc-uxp
