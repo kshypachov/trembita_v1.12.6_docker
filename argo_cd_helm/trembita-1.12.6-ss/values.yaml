@@ -104,9 +104,12 @@ ingress:
         - path: /
           pathType: Prefix
           port: 4000
-#        - path: /secure_api(/|$)(.*)
-#          pathType: ImplementationSpecific
-#          port: 80
+
+    - host: api.trembita.local
+      paths:
+        - path: /
+          pathType: Prefix
+          port: 80
   tls:
     - hosts:
         - trembita.local
@@ -199,7 +202,7 @@ affinity: {}
 persistentVolumes:
   etc-uxp:
     enabled: true
-    initCopy: true
+    initCopy: false
     size: 100Mi
     mountPath: /etc/uxp
     storageClassName: ""
@@ -208,7 +211,7 @@ persistentVolumes:
 
   lib-uxp:
     enabled: true
-    initCopy: true
+    initCopy: false
     size: 200Mi
     mountPath: /var/lib/uxp
     storageClassName: ""
@@ -217,7 +220,7 @@ persistentVolumes:
 
   postgres-data:
     enabled: true
-    initCopy: true
+    initCopy: false
     size: 1Gi
     mountPath: /var/lib/postgresql/10/main/
     storageClassName: ""
@@ -226,7 +229,7 @@ persistentVolumes:
 
   log:
     enabled: true
-    initCopy: true
+    initCopy: false
     size: 200Mi
     mountPath: /var/log
     storageClassName: ""
