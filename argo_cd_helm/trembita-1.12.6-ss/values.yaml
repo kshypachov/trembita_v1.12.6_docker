@@ -188,8 +188,8 @@ affinity: {}
 
 persistentVolumes:
   etc-uxp:
-    enabled: false
-    initCopy: false
+    enabled: true
+    initCopy: true
     size: 100Mi
     mountPath: /mnt/uxp
     storageClassName: ""
