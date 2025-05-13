@@ -1,4 +1,5 @@
 {{- define "trembita-1.12.6-ss.initContainers" }}
+initContainers:
   {{- range $name, $cfg := .Values.persistentVolumes }}
   {{- if and $cfg.enabled (or (not (hasKey $cfg "initCopy")) $cfg.initCopy) }}
   - name: init-copy-{{ $name }}
