@@ -10,22 +10,14 @@ initContainers:
       - |
         set -x
         echo "[INFO] Starting init container for {{ $name }}"
-
         if [ -d "{{ $cfg.mountPath }}" ]; then
           cp -rp {{ $cfg.mountPath }}/* /mnt/target/ || true
           echo "[INFO] Done copying {{ $cfg.mountPath }} to /mnt/target/"
 
-          # Определим UID:GID по существующему объекту в источнике
-          ref_path="{{ $cfg.mountPath }}"
-          ref_file=$(find "$ref_path" -type f -print -quit)
+          uid_gid=$(stat -c '%u:%g' {{ $cfg.mountPath }})
+          echo "[INFO] Changing ownership of /mnt/target/ to $uid_gid"
+          chown "$uid_gid" /mnt/target/
 
-          if [ -n "$ref_file" ]; then
-            uid_gid=$(stat -c '%u:%g' "$ref_file")
-            echo "[INFO] Changing ownership of /mnt/target/ to $uid_gid"
-            chown -R "$uid_gid" /mnt/target/
-          else
-            echo "[WARN] No reference file found to detect UID:GID"
-          fi
         else
           echo "[WARN] Source directory {{ $cfg.mountPath }} not found"
         fi
@@ -35,29 +27,6 @@ initContainers:
   {{- end }}
   {{- end }}
 {{- end }}
-
-{{/*initContainers:*/}}
-{{/*  {{- range $name, $cfg := .Values.persistentVolumes }}*/}}
-{{/*  {{- if and $cfg.enabled (or (not (hasKey $cfg "initCopy")) $cfg.initCopy) }}*/}}
-{{/*  - name: init-copy-{{ $name }}*/}}
-{{/*    image: {{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}*/}}
-{{/*    command: ["/bin/sh", "-c"]*/}}
-{{/*    args:*/}}
-{{/*      - |*/}}
-{{/*        set -x*/}}
-{{/*        echo "[INFO] Starting init container for {{ $name }}"*/}}
-{{/*        if [ -d "{{ $cfg.mountPath }}" ]; then*/}}
-{{/*          cp -rp {{ $cfg.mountPath }}/* /mnt/target/ || true*/}}
-{{/*          echo "[INFO] Done copying {{ $cfg.mountPath }} to /mnt/target/"*/}}
-{{/*        else*/}}
-{{/*          echo "[WARN] Source directory {{ $cfg.mountPath }} not found"*/}}
-{{/*        fi*/}}
-{{/*    volumeMounts:*/}}
-{{/*      - name: {{ $name }}*/}}
-{{/*        mountPath: /mnt/target*/}}
-{{/*  {{- end }}*/}}
-{{/*  {{- end }}*/}}
-{{/*{{- end }}*/}}
 
 {{/*initContainers:*/}}
 {{/*  - name: etcuxp*/}}
