@@ -32,7 +32,7 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{/*      {{ include "trembita-1.12.6-ss.initContainers" . | nindent 6 }}*/}}
+      {{ include "trembita-1.12.6-ss.initContainers" . | nindent 6 }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
