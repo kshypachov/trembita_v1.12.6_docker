@@ -1,5 +1,17 @@
-{{/*{{- define "trembita-1.12.6-ss.initContainers" }}*/}}
-{{/*initContainers:*/}}
+{{- define "trembita-1.12.6-ss.initContainers" }}
+initContainers:
+  - name: test-etc/uxp
+    image: {{ $.Values.image.repository }}:{{ $.Values.image.tag | default $.Chart.AppVersion }}
+    command: ["/bin/sh","-c"]
+    args:
+      - |
+        set -x
+        echo "Start copy"
+        cp -rp /etc/uxp/ /mnt/etc-uxp/
+        echo "End copy"
+    volumeMounts:
+      - name: etc-uxp
+        mountPath: /mnt/etc-uxp/
 {{/*  {{- range $name, $cfg := .Values.persistentVolumes }}*/}}
 {{/*  {{- if and $cfg.enabled (or (not (hasKey $cfg "initCopy")) $cfg.initCopy) }}*/}}
 {{/*  - name: init-copy-{{ $name }}*/}}
@@ -20,4 +32,4 @@
 {{/*        mountPath: /mnt/target*/}}
 {{/*  {{- end }}*/}}
 {{/*  {{- end }}*/}}
-{{/*{{- end }}*/}}
+{{- end }}

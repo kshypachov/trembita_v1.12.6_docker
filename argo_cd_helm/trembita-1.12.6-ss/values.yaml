@@ -146,10 +146,10 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-#  - name: etc-uxp
-#    persistentVolumeClaim:
-#      claimName: trembita-1-12-6-trembita-1-12-6-ss-etc-uxp
+volumes:
+  - name: etc-uxp
+    persistentVolumeClaim:
+      claimName: trembita-1-12-6-trembita-1-12-6-ss-etc-uxp
 #  - name: lib-uxp
 #    persistentVolumeClaim:
 #      claimName: trembita-1-12-6-trembita-1-12-6-ss-lib-uxp
@@ -165,7 +165,9 @@ volumes: []
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - name: etc-uxp
+    mountPath: /mnt/uxp
 #  - name: etc-uxp
 #    mountPath: /etc/uxp
 #  - name: lib-uxp
@@ -184,7 +186,16 @@ tolerations: []
 
 affinity: {}
 
-persistentVolumes: []
+persistentVolumes:
+  etc-uxp:
+    enabled: false
+    initCopy: false
+    size: 100Mi
+    mountPath: /mnt/uxp
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+
 #  etc-uxp:
 #    enabled: false
 #    initCopy: false
