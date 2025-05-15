@@ -72,13 +72,13 @@ spec:
 {{/*      volumes:*/}}
 {{/*        {{- toYaml . | nindent 8 }}*/}}
 {{/*      {{- end }}*/}}
-      {{- with .Values.volumes }}
+      {{- if .Values.persistentVolumes}}
       volumes:
-        {{- range $name := . }}
+      {{- range $name := .Values.persistentVolumes }}
         - name: {{ $name }}
           persistentVolumeClaim:
             claimName: {{ printf "%s-%s" (include "trembita-1.12.6-ss.fullname" $) $name }}
-        {{- end }}
+      {{- end }}
       {{- end }}
 
       {{- with .Values.nodeSelector }}
