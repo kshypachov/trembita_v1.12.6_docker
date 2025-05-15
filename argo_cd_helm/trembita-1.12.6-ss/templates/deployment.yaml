@@ -47,11 +47,6 @@ spec:
             {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            {{- range .Values.services.internal.ports }}
-            - name: {{ .name }}
-              containerPort: {{ .port }}
-              protocol: TCP
-            {{ end }}
             {{- range .Values.services.external.ports }}
             - name: {{ .name }}
               containerPort: {{ .port }}
